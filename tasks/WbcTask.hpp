@@ -65,6 +65,7 @@ protected:
     std::vector<TaskConfig> wbc_config;                   /** WBC tasks configuration*/
     bool compute_task_status;                             /** For debugging purpose*/
     bool integrate;                                       /** Perform numerical integration for the solver output*/
+    bool use_cur_state;                                   /** Use current joint state instead of internally accumulated joint state estimate during integration */
     TimingStats timing_stats;                             /** statistics on compuation time*/
     ActiveContacts active_contacts;                       /** Names of the active contact points*/
     base::samples::Wrenches contact_wrenches;             /** Measured contact wrenches*/

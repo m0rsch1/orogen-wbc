@@ -66,6 +66,7 @@ bool WbcTask::configureHook(){
 
     compute_task_status = _compute_task_status.get();
     integrate = _integrate.get();
+    use_cur_state = _integrate_use_current_state.get();
     has_floating_base_state = false;
 
     return true;
@@ -155,7 +156,9 @@ void WbcTask::updateHook(){
     _current_joint_weights.write(wbc_scene->getActuatedJointWeights());
     solver_output_joints = wbc_scene->solve(hierarchical_qp);
     if(integrate)
-        integrator.integrate(robot_model->jointState(robot_model->actuatedJointNames()), solver_output_joints, this->getPeriod());
+    {
+        integrator.integrate(robot_model->jointState(robot_model->actuatedJointNames()), solver_output_joints, this->getPeriod(), IntegrationMethod::RECTANGULAR, use_cur_state);
+    }
     _solver_output.write(solver_output_joints);
     timing_stats.time_solve = (base::Time::now()-cur_time).toSeconds();
 
